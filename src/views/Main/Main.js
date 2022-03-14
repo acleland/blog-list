@@ -1,10 +1,30 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './Main.css';
 
+import { getBlogs } from '../../services/client';
+import BlogCard from '../../components/BlogCard/BlogCard';
+
 function Main() {
+  const [blogs, setBlogs] = useState([]);
+
+  useEffect(() => {
+    const fetchBlogs = async () => {
+      try {
+        const resp = await getBlogs();
+        console.log(resp);
+        setBlogs(resp);
+      } catch (e) {
+        alert(e.message);
+      }
+    };
+    fetchBlogs();
+  }, []);
+
   return (
     <section className="main">
-      <h1>This is the Main component</h1>
+      {blogs.map((blog) => (
+        <BlogCard key={blog.id} {...blog} />
+      ))}
     </section>
   );
 }
