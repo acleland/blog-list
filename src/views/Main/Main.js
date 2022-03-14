@@ -11,7 +11,6 @@ function Main() {
     const fetchBlogs = async () => {
       try {
         const resp = await getBlogs();
-        console.log(resp);
         setBlogs(resp);
       } catch (e) {
         alert(e.message);
